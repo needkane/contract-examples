@@ -1,29 +1,50 @@
-pragma solidity ^0.4.0;
-
+pragma solidity ^0.4.2;                                                                                                            
+ 
 contract Test {
     
-    uint val;
+    int public val ;
     
-    function GetVal() returns (uint) {
+    function GetVal() public returns (int) {
         return val;
     }
     
-    function SetVal(uint v) {
+    
+    function SetVal(int v) public {
         val=v;
         return;
     }
 }
-
+ 
 contract FunctionInvoker{
     
-    address _address = 0x7777e397863b17106fc9f0cb7144f7b536b3709e;
-    function SetValue() public {
-        Test(_address).SetVal(12345);
-        return;
-    }
+    int val2;
+    address addrVal;         
+    address user_addr = msg.sender;
+ 
+    constructor(address addr){
+        addrVal=addr;
+    }   
     
-    function GetValue() returns (uint){
-        uint val=Test(_address).GetVal();
-        return val; 
-    }
+    function GetAddr() returns (address){
+        return addrVal;
+    }   
+    
+    function GetAddr2() returns (address){
+        return msg.sender;
+    }   
+ 
+    
+    function SetValue() returns (address){
+        Test(addrVal).SetVal(12345);
+        return addrVal;
+    }   
+    
+    function GetValue() returns (int){
+        val2=Test(addrVal).GetVal();
+        if (val2 == 0){ 
+            val2=-1;
+        }   
+        
+        return val2; 
+    }   
 }
